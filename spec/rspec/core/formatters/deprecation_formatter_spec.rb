@@ -4,6 +4,22 @@ require 'tempfile'
 
 module RSpec::Core::Formatters
   describe DeprecationFormatter do
+    describe '#setup' do
+      let(:formatter) { DeprecationFormatter.new }
+      let(:reporter)  { double "reporter" }
+
+      it 'registers the formater with the reporter for its notifications' do
+        expect(reporter).to receive(:register_listener).with(formatter,*formatter.notifications)
+        formatter.setup(reporter)
+      end
+    end
+
+    describe '#notifications' do
+      it 'returns the notifications the deprecation formatter implements' do
+        expect(DeprecationFormatter.new.notifications).to eq [:deprecation, :deprecation_summary]
+      end
+    end
+
     describe "#deprecation" do
       let(:deprecation_stream) { StringIO.new }
       let(:summary_stream)     { StringIO.new }

@@ -8,6 +8,14 @@ module RSpec
           @count = 0
         end
 
+        def setup(reporter)
+          reporter.register_listener self, *notifications
+        end
+
+        def notifications
+          [:deprecation, :deprecation_summary]
+        end
+
         def deprecation(data)
           @count += 1
           if data[:message]
