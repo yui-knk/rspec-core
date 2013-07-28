@@ -31,6 +31,23 @@ module RSpec
 
         # @api public
         #
+        # This method is invoked during the setup phase to register
+        # a formatters notifications on a reporter
+        #
+        # @param reporter
+        def setup(reporter)
+          reporter.register_listener self, *notifications
+        end
+
+        # @api public
+        def notifications
+          %i[start example_group_started example_group_finished example_started
+          example_passed example_pending example_failed message stop start_dump
+          dump_failures dump_summary dump_pending seed close]
+        end
+
+        # @api public
+        #
         # This method is invoked before any examples are run, right after
         # they have all been collected. This can be useful for special
         # formatters that need to provide progress on feedback (graphical ones).

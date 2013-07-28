@@ -6,6 +6,25 @@ describe RSpec::Core::Formatters::BaseFormatter do
   let(:output)    { StringIO.new }
   let(:formatter) { RSpec::Core::Formatters::BaseFormatter.new(output) }
 
+  describe '#setup' do
+    let(:reporter)  { double "reporter" }
+
+    it 'registers the formater with the reporter for its notifications' do
+      expect(reporter).to receive(:register_listener).with(formatter,*formatter.notifications)
+      formatter.setup(reporter)
+    end
+  end
+
+  describe '#notifications' do
+    it 'knows which notifications it responds to' do
+      expect(formatter.notifications).to eq([
+        :start, :example_group_started, :example_group_finished, :example_started,
+        :example_passed, :example_pending, :example_failed, :message, :stop,
+        :start_dump, :dump_failures, :dump_summary, :dump_pending, :seed, :close
+      ])
+    end
+  end
+
   describe "backtrace_line" do
     it "trims current working directory" do
       expect(formatter.__send__(:backtrace_line, File.expand_path(__FILE__))).to eq("./spec/rspec/core/formatters/base_formatter_spec.rb")
