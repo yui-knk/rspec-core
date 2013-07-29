@@ -41,9 +41,9 @@ module RSpec
 
         # @api public
         def notifications
-          %i[start example_group_started example_group_finished example_started
+          %w[start example_group_started example_group_finished example_started
           example_passed example_pending example_failed message stop start_dump
-          dump_failures dump_summary dump_pending seed close]
+          dump_failures dump_summary dump_pending seed close].map &:to_sym
         end
 
         # @api public

@@ -8,7 +8,7 @@ module RSpec::Core
       let(:formatter) { double("formatter") }
       let(:example)   { double("example") }
 
-      %i[start_dump dump_pending dump_failures dump_summary close].each do |message|
+      %w[start_dump dump_pending dump_failures dump_summary close].map(&:to_sym).each do |message|
         it "sends #{message} to the formatter(s) that respond to message" do
           reporter.register_listener formatter, message
           formatter.as_null_object.should_receive(message)
