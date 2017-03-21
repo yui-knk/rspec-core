@@ -84,7 +84,7 @@ function run_spec_suite_for {
       unset BUNDLE_GEMFILE
       bundle_install_flags=`cat .travis.yml | grep bundler_args | tr -d '"' | grep -o " .*"`
       if is_mri_192_plus; then
-        travis_retry eval "RUBYOPT=$RUBYOPT:'--enable rubygems' bundle install $bundle_install_flags"
+        travis_retry eval "RUBYOPT=$RUBYOPT bundle install $bundle_install_flags"
       else
         travis_retry eval "bundle install $bundle_install_flags"
       fi
